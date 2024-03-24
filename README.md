@@ -22,7 +22,7 @@ cargo install ollama-inquire
 After installation, you can start using Ollama-inquire by running:
 
 ```sh
-ask [OPTIONS] [PROMPT]
+inquire [OPTIONS] [PROMPT]
 ```
 
 ### Options
@@ -33,32 +33,32 @@ ask [OPTIONS] [PROMPT]
 
 ### Examples
 
-Asking a question using the default model:
+inquireing a question using the default model:
 
 ```sh
-ask "What is the capital of Kenya?"
+inquire "What is the capital of Kenya?"
 ```
 or
 ```sh
-ask What is the capital of France?
+inquire What is the capital of France?
 ```
 
 Specifying a different model:
 
 ```sh
-ask --model=gale "Explain the theory of relativity"
+inquire --model=gale "Explain the theory of relativity"
 ```
 Find all available models from Ollama [here](https://ollama.ai/library).
 
 Checking the version:
 
 ```sh
-ask --version
+inquire --version
 ```
 
 Seeing the help info:
 ```sh
-ask --help
+inquire --help
 ```
 
 ## Contributing

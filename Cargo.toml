@@ -6,6 +6,12 @@ authors = [
   "Elijah Samson <https://github.com/obaraelijah> <elijahobara357@gmail.com>",
 ]
 description = "Query any LLM found on Ollama from the terminal!"
+documentation = "https://github.com/obaraelijah/ollama-inquire/blob/main/README.md"
+readme = "README.md"
+homepage = "https://crates.io/crates/ollama-inquire"
+repository = "https://github.com/obaraelijah/ollama-inquire"
+keywords = ["LLM", "Ollama", "AI", "Chatbot", "CLI"]
+license = "MIT OR Apache-2.0"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 [[bin]]

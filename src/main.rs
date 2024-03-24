@@ -21,7 +21,7 @@ fn main() -> Result<(), Error> {
         println!("Ollama is not installed. Installing Ollama...");
         install_ollama().expect("Failed to install Ollama");
     }
-    
+
     run_ollama(&model, &question).expect("Failed to run Ollama");
     Ok(())
 }

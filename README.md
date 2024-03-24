@@ -1,17 +1,17 @@
-# Ollama-inquire
+# Inquire-Ollama: Your Intelligent Question Answering Companion
 
-Ollama-inquire is a command-line tool that allows users to interact with the [Ollama](https://ollama.ai/) LLM models directly from the terminal. This tool provides a simple and intuitive way to ask questions and receive responses from Ollama models.
+Inquire-Ollama: is a command-line tool that allows users to interact with the [Ollama](https://ollama.ai/) LLM models directly from the terminal. This tool provides a simple and intuitive way to inquire questions and receive responses from Ollama models.
 
 ## Features
 
-- **Interactive CLI**: Easily ask questions and get responses.
+- **Interactive CLI**: Easily inquire questions and get responses.
 - **Model Selection**: Choose different models for varied responses.
 
 ## Installation
 
-To install Ollama-inquire, you need to have Rust and Cargo installed on your system. If you haven't already installed Rust, you can do so by following the instructions [here](https://www.rust-lang.org/tools/install).
+To install Inquire-Ollama:, you need to have Rust and Cargo installed on your system. If you haven't already installed Rust, you can do so by following the instructions [here](https://www.rust-lang.org/tools/install).
 
-Once Rust is installed, you can install Ollama-inquire using Cargo:
+Once Rust is installed, you can install Inquire-Ollama: using Cargo:
 
 ```sh
 cargo install ollama-inquire
@@ -19,7 +19,7 @@ cargo install ollama-inquire
 
 ## Usage
 
-After installation, you can start using Ollama-inquire by running:
+After installation, you can start using Inquire-Ollama: by running:
 
 ```sh
 inquire [OPTIONS] [PROMPT]
@@ -28,15 +28,15 @@ inquire [OPTIONS] [PROMPT]
 ### Options
 
 - `--model=[MODEL]`: Specify the model to use (default is 'mistral').
-- `--version`: Display the version of the installed Ollama-inquire tool.
+- `--version`: Display the version of the installed Inquire-Ollama: tool.
 - `[PROMPT]`: The question or prompt to send to Ollama. Quotation marks are not required.
 
 ### Examples
 
-inquireing a question using the default model:
+Asking a question using the default model:
 
 ```sh
-inquire "What is the capital of Kenya?"
+inquire "What is the capital of kenya?"
 ```
 or
 ```sh
@@ -63,8 +63,8 @@ inquire --help
 
 ## Contributing
 
-Contributions to Ollama-inquire are welcome! If you have suggestions for improvements or encounter any issues, please feel free to open an issue or submit a pull request on our [GitHub repository](https://github.com/obaraelijah/ollama-inquire).
+Contributions to Inquire-Ollama: are welcome! If you have suggestions for improvements or encounter any issues, please feel free to open an issue or submit a pull request on our [GitHub repository](https://github.com/obaraelijah/ollama-inquire).
 
 ## License
 
-Ollama-inquire is licensed under the MIT License.
+Inquire-Ollama: is licensed under the MIT License.

@@ -1,6 +1,6 @@
 [package]
 name = "ollama-inquire"
-version = "1.0.2"
+version = "1.0.6"
 edition = "2021"
 authors = [
   "Elijah Samson <https://github.com/obaraelijah> <elijahobara357@gmail.com>",

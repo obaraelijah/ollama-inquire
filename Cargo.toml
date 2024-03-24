@@ -1,9 +1,17 @@
 [package]
-name = "ollamai_nquire"
+name = "ollama-inquire"
 version = "0.1.0"
 edition = "2021"
+authors = [
+  "Elijah Samson <https://github.com/obaraelijah> <elijahobara357@gmail.com>",
+]
+description = "Query any LLM found on Ollama from the terminal!"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[[bin]]
+name = "ask"
+path = "src/main.rs"
 
 [dependencies]
 spinners-rs = "2.3.0"
+

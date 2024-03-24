@@ -1,4 +1,7 @@
-use std::{ffi::OsString, io::{Error, Write}};
+use std::{
+    ffi::OsString,
+    io::{Error, Write},
+};
 
 pub fn greet_user() -> Result<(), Error> {
     writeln!(std::io::stdout(), "Welcome to ask Ollama!")?;
@@ -7,7 +10,8 @@ pub fn greet_user() -> Result<(), Error> {
 
 pub fn handle_help_or_version_request(program_args: &mut Vec<OsString>) -> Result<bool, Error> {
     let mut handled = false;
-    if let Some(arg) = program_args.pop() { // Use pop to handle last argument
+    if let Some(arg) = program_args.pop() {
+        // Use pop to handle last argument
         match arg.to_str().unwrap_or_default() {
             "--help" => {
                 print_help();
@@ -17,7 +21,12 @@ pub fn handle_help_or_version_request(program_args: &mut Vec<OsString>) -> Resul
                 println!("inquire-ollama version: {}", env!("CARGO_PKG_VERSION"));
                 handled = true;
             }
-            _ => return Err(Error::new(std::io::ErrorKind::InvalidInput, "Invalid argument")),
+            _ => {
+                return Err(Error::new(
+                    std::io::ErrorKind::InvalidInput,
+                    "Invalid argument",
+                ))
+            }
         }
     }
     Ok(handled)
@@ -35,7 +44,10 @@ pub fn parse_arguments(args: &mut Vec<OsString>) -> Result<(String, String), Err
             if model_parts.len() == 2 {
                 model = model_parts[1].to_string();
             } else {
-                return Err(Error::new(std::io::ErrorKind::InvalidInput, "Invalid --model argument"));
+                return Err(Error::new(
+                    std::io::ErrorKind::InvalidInput,
+                    "Invalid --model argument",
+                ));
             }
         } else {
             question.push_str(arg_str);
@@ -46,8 +58,6 @@ pub fn parse_arguments(args: &mut Vec<OsString>) -> Result<(String, String), Err
     question = question.trim().to_string();
     Ok((model, question))
 }
-
-
 
 pub fn print_help() {
     println!("Usage: ask [OPTIONS] [PROMPT]");

@@ -1,8 +1,8 @@
-use std::thread;
+use spinners_rs::{Spinner, Spinners};
 use std::process::{Command, Output, Stdio};
 use std::sync::{Arc, Mutex};
+use std::thread;
 use std::time::Duration;
-use spinners_rs::{Spinner, Spinners};
 
 pub fn ollama_installed() -> bool {
     Command::new("sh")
@@ -19,7 +19,6 @@ pub fn install_ollama() -> Result<Output, std::io::Error> {
         .arg("curl https://ollama.ai/install.sh | sh")
         .output()
 }
-
 
 pub fn run_ollama(model: &str, question: &str) -> Result<Output, std::io::Error> {
     let loading_msg: String = format!("Running {}...", model);

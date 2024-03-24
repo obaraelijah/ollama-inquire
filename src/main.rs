@@ -51,6 +51,11 @@ fn main() {
 
     question = question.trim().to_string();
 
+    if !ollama_installed() {
+        println!("Ollama is not installed. Installing Ollama...");
+        install_ollama().expect("Failed to install Ollama");
+    }
+
 }
 
 fn print_help() {
@@ -60,4 +65,25 @@ fn print_help() {
     println!("  --model=[MODEL]    Specify the model to use. Default is 'mistral' if no model is provided");
     println!("  --version          Show version information");
     println!("  [PROMPT]           The question to ask Ollama");
+}
+
+fn ollama_installed() -> bool {
+    Command::new("sh")
+        .arg("-c")
+        .arg("command -v ollama")
+        .output()
+        .map(|output| output.status.success())
+        .unwrap_or(false)
+}
+
+fn install_ollama() -> Result<Output, std::io::Error> {
+    Command::new("sh")
+        .arg("-c")
+        .arg("curl https://ollama.ai/install.sh | sh")
+        .output()
+}
+
+
+fn run_ollama() {
+    unimplemented!()
 }

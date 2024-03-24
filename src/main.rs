@@ -10,51 +10,18 @@ use std::ffi::OsString;
 fn main() -> Result<(), Error> {
     greet_user()?;
     let mut program_args = env::args_os().skip(1).collect::<Vec<OsString>>(); 
-    let args: Vec<String> = env::args().collect();
 
     if program_args.is_empty() && !handle_help_or_version_request(&mut program_args)? {
         return Err(Error::new(std::io::ErrorKind::InvalidInput, "No question provided"));
     }
     
-    let mut model = String::from("mistrial");
-    let mut question = String::from("Please enter your question: ");
-
-    let mut args_iter = args.iter().skip(1);
-    let mut model_specified = false;
-
-    if let Some(first_arg) = args_iter.next() {
-        if first_arg.starts_with("--model") {
-            let model_parts: Vec<&str> = first_arg.splitn(2, '=').collect();
-            if model_parts.len() == 2 {
-                model = model_parts[1].to_string();
-                model_specified = true;
-            }
-        } else {
-            question.push_str(first_arg);
-            question.push(' ');
-        }
-    }
-
-    let mut new_question = String::new();
-
-    for arg in args_iter {
-        if !model_specified || arg != &model {
-            new_question.push_str(arg);
-            new_question.push(' ');
-        }
-    }
-
-    if new_question.len() > 0 {
-        question = new_question;
-    }
-
-    question = question.trim().to_string();
+    let (model, question) = parse_arguments(&mut program_args)?;
 
     if !ollama_installed() {
         println!("Ollama is not installed. Installing Ollama...");
         install_ollama().expect("Failed to install Ollama");
     }
-
+    
     run_ollama(&model, &question).expect("Failed to run Ollama");
     Ok(())
 }
@@ -81,6 +48,32 @@ fn handle_help_or_version_request(program_args: &mut Vec<OsString>) -> Result<bo
     }
     Ok(handled)
 }
+
+fn parse_arguments(args: &mut Vec<OsString>) -> Result<(String, String), Error> {
+    let mut model = String::from("mistrial");
+    let mut question = String::new();
+
+    for arg in args.iter() {
+        let arg_str = arg.to_str().unwrap_or_default(); // Handle potential non-utf8 arguments
+
+        if arg_str.starts_with("--model=") {
+            let model_parts: Vec<&str> = arg_str.splitn(2, '=').collect();
+            if model_parts.len() == 2 {
+                model = model_parts[1].to_string();
+            } else {
+                return Err(Error::new(std::io::ErrorKind::InvalidInput, "Invalid --model argument"));
+            }
+        } else {
+            question.push_str(arg_str);
+            question.push(' ');
+        }
+    }
+
+    question = question.trim().to_string();
+    Ok((model, question))
+}
+
+
 
 fn print_help() {
     println!("Usage: ask [OPTIONS] [PROMPT]");

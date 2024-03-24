@@ -4,17 +4,16 @@ use std::thread;
 use std::process::{Command, Output, Stdio};
 use std::sync::{Arc, Mutex};
 use std::time::Duration;
+use std::io::{Write, Error};
+use std::ffi::OsString;
 
-fn main() {
+fn main() -> Result<(), Error> {
+    greet_user()?;
+    let mut program_args = env::args_os().skip(1).collect::<Vec<OsString>>(); 
     let args: Vec<String> = env::args().collect();
 
-    if args.len() >= 1 && args[1] == "--help" {
-        print_help();
-        return;
-    }
-
-    if args.len() >= 1 && args[1] == "--version" {
-        println!("ollama-inquire version: {}", env!("CARGO_PKG_VERSION"))
+    if program_args.is_empty() && !handle_help_or_version_request(&mut program_args)? {
+        return Err(Error::new(std::io::ErrorKind::InvalidInput, "No question provided"));
     }
     
     let mut model = String::from("mistrial");
@@ -56,6 +55,31 @@ fn main() {
         install_ollama().expect("Failed to install Ollama");
     }
 
+    run_ollama(&model, &question).expect("Failed to run Ollama");
+    Ok(())
+}
+
+fn greet_user() -> Result<(), Error> {
+    writeln!(std::io::stdout(), "Welcome to ask Ollama!")?;
+    Ok(())
+}
+
+fn handle_help_or_version_request(program_args: &mut Vec<OsString>) -> Result<bool, Error> {
+    let mut handled = false;
+    if let Some(arg) = program_args.pop() { // Use pop to handle last argument
+        match arg.to_str().unwrap_or_default() {
+            "--help" => {
+                print_help();
+                handled = true;
+            }
+            "--version" => {
+                println!("inquire-ollama version: {}", env!("CARGO_PKG_VERSION"));
+                handled = true;
+            }
+            _ => return Err(Error::new(std::io::ErrorKind::InvalidInput, "Invalid argument")),
+        }
+    }
+    Ok(handled)
 }
 
 fn print_help() {

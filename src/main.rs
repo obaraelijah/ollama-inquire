@@ -84,6 +84,27 @@ fn install_ollama() -> Result<Output, std::io::Error> {
 }
 
 
-fn run_ollama() {
-    unimplemented!()
-}
+fn run_ollama(model: &str, question: &str) {
+    let loading_msg: String = format!("Running {}", model);
+    let mut spinner = Spinner::new(Spinners::Dots10, loading_msg);
+    spinner.start(); 
+
+    let output = Arc::new(Mutex::new(None));
+    let output_clone = Arc::clone(&output);
+
+    let model_clone = model.to_string();
+    let question_clone = question.to_string();
+
+    thread::spawn(move || {
+        let command_output = Command::new("ollama")
+            .arg("run")
+            .arg(&model_clone)
+            .arg(&question_clone)
+            .stdout(Stdio::piped())
+            .stderr(Stdio::piped())
+            .output();
+
+        let mut output = output_clone.lock().unwrap();
+        *output = Some(command_output);
+    });
+}   
